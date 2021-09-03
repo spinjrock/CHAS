@@ -1,5 +1,8 @@
 #Spencer Oswald 9/3/21
 from datetime import datetime, timedelta
+from datetime import date
+import SpreadsheetHandler
+import SquareHandler
 
 class AutoSheetFE:
 
@@ -20,8 +23,8 @@ class AutoSheetFE:
     def format_dates(self):
         start_date = self.START_DATE.split('-')
         end_date = self.END_DATE.split('-')
-        start_date_obj = datetime.date(int(start_date[0], int(start_date[1]), int(start_date[2])))
-        end_date_obj = datetime.date(int(end_date[0], int(end_date[1]), int(end_date[2])))
+        start_date_obj = date(int(start_date[0]), int(start_date[1]), int(start_date[2]))
+        end_date_obj = date(int(end_date[0]), int(end_date[1]), int(end_date[2]))
         date_delta = timedelta(days=1)
         while start_date_obj <= end_date_obj:
             self.DATES.append(str(start_date_obj))
@@ -32,4 +35,18 @@ class AutoSheetFE:
         self.set_dates()
         self.format_dates()
         self.set_spreadsheet_name()
-        #TODO The rest of the functionality will be implemented here when it is done.
+        SH = SquareHandler.SquareHandler(self.DATES)
+        SH.generate_bodies()
+        SPH = SpreadsheetHandler.SpreadsheetHandler(SH.get_range_totals(), self.SPREADSHEET_NAME)
+        SPH.format_spreadsheet()
+        SPH.write_spreadsheet()
+        SPH.wrapup()
+        print('Done!')
+
+if __name__ == '__main__':
+    AH = AutoSheetFE()
+    AH.__main__()
+    
+        
+        
+        

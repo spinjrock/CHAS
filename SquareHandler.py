@@ -1,5 +1,6 @@
 #Spencer Oswald
-#TODO Everything
+
+from openpyxl.descriptors.base import DateTime
 from square.client import Client
 
 class SquareHandler:
@@ -8,29 +9,27 @@ class SquareHandler:
     DATES = []
     BODIES = {} #Keys are dates, bodies are request bodies
     API = None
-    ENVIROMENT = "sandbox"
-
-    def SquareHandler(self):
+    ENVIROMENT = "production"
+    
+    def get_creds(self):
+        with open("creds", "r") as creds:
+            self.CREDS = creds.read()
+    
+    def __init__(self):
         self.get_creds()
         self.DATES = ["2021-09-02"]
     
-    def SquareHandler(self, DATES):
-            self.get_creds()
-            self.DATES = DATES
-
-    def get_creds(self):
-        #TODO Actually put creds in the file, it's empty
-        with open("creds", "r") as creds:
-            self.CREDS = creds.read()
-
+    def __init__(self, DATES: list):
+        self.get_creds()
+        self.DATES = DATES
+    
     def connect(self):
         client = Client(access_token=self.CREDS, environment=self.ENVIROMENT)
-        API = Client.orders
+        self.API = client.orders
     
     def generate_bodies(self):
-        #TODO get body format from other computer
         for date in self.DATES:
-            body = body = {
+            body = {
             "location_ids": [
             "L7CEV1BC6XAZT"
             ],
@@ -54,10 +53,13 @@ class SquareHandler:
             }
             },
             "return_entries": True
-          }
+            }
             self.BODIES[date] = body
     
     def get_range_totals(self):
+        #Step 0, get the api, if we haven't already
+        if self.API == None:
+            self.connect()
         #Step 1 get order ids for every order in a day
         order_ids = {} #Keys will be dates, bodies a list of IDS
         for date in self.BODIES:
@@ -65,7 +67,7 @@ class SquareHandler:
             result_body = ""
             result = self.API.search_orders(self.BODIES[date])
             if result.is_success(): result_body = result.body
-            elif result.is_error(): print("There was a problem getting the order ids\n"+result.errors)
+            elif result.is_error(): print("There was a problem getting the order ids\n"+str(result.errors))
             for entry in result_body:
                 for j in result_body[entry]:
                     ids.append(j['order_id'])
@@ -82,7 +84,7 @@ class SquareHandler:
                     tenders = result_body['order']['tenders']
                 elif result.is_error(): 
                     print("There was an error in getting the daily totals")
-                    print(result.errors)
+                    print(str(result.errors))
                 tender_total = 0
                 for tender in tenders:
                     gain = int(tender['amount_money']['amount'])
@@ -91,7 +93,7 @@ class SquareHandler:
                     tender_total += net_total
                 daily_total += tender_total
             net_amounts[date] = daily_total
-        #TODO Testing
+        return net_amounts
 
 
 
