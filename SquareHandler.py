@@ -29,7 +29,33 @@ class SquareHandler:
     
     def generate_bodies(self):
         #TODO get body format from other computer
-        return None
+        for date in self.DATES:
+            body = body = {
+            "location_ids": [
+            "L7CEV1BC6XAZT"
+            ],
+            "query": {
+            "filter": {
+                "state_filter": {
+                "states": [
+                    "COMPLETED"
+                ]
+                },
+                "date_time_filter": {
+                "closed_at": {
+                    "start_at": date+"T00:00:00Z",
+                    "end_at": date+"T23:59:59Z"
+                }
+                }
+            },
+            "sort": {
+                "sort_field": "CLOSED_AT",
+                "sort_order": "ASC"
+            }
+            },
+            "return_entries": True
+          }
+            self.BODIES[date] = body
     
     def get_range_totals(self):
         #Step 1 get order ids for every order in a day
