@@ -1,11 +1,11 @@
-This really shouldn't be read by anyone because this is a small private project.
+<p>This really shouldn't be read by anyone because this is a small private project.</p>
 
-Improvements TODO:
-    Input validation for various functions
-    More bugtests, gotta be more bugs hiding
-    Maybe an actual ui
-    A verbose setting for various functions and classes
-    Probably check the totals in detail
+<p>Improvements TODO:</p>
+    <p>Input validation for various functions</p>
+    <p>More bugtests, gotta be more bugs hiding</p>
+    <p>Maybe an actual ui</p>
+    <p>A verbose setting for various functions and classes</p>
+    <p>Probably check the totals in detail</p>
 
-Known Bugs:
+<p>Known Bugs:</p>
     
