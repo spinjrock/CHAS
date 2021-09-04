@@ -39,7 +39,7 @@ class SpreadsheetHandler:
         self.WB.save(self.SPREADSHEET_NAME)
     
     def format_money(self, money: int):
-        return "$"+str(float(money) / 100)
+        return float(money) / 100
     
     def write_spreadsheet(self):
         i = 2
