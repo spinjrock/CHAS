@@ -2,11 +2,14 @@
 
 <h2>Improvements TODO:</h2>
     <ul>
-        <li>Input validation for various functions</li>
+        <li>Write a cell to total all of the inputs</li>
         <li>More bugtests, gotta be more bugs hiding</li>
         <li>Maybe an actual ui</li>
         <li>A verbose setting for various functions and classes</li>
         <li>Probably check the totals in detail</li>
     </ul>
 <h2>Known Bugs:</h2>
-    
+    <ul>
+        <li>Can't process refunds : FIXED</li>
+        <li>Can't run on the old laptop, it might be a 32bit system</li>
+    </ul>
