@@ -12,13 +12,32 @@ class AutoSheetFE:
     SPREADSHEET_NAME: str
 
     def set_dates(self):
-        #TODO Input validation
-        self.START_DATE = input('What day would you like to start the search? (YYYY-MM-DD)\n')
-        self.END_DATE =  input('What day would you like to end the search? (YYYY-MM-DD)\n')
-
+        repeat = True
+        while repeat:
+            start_date = input('What day would you like to start the search? (YYYY-MM-DD)\n')
+            if start_date[4] == "-" and start_date[7] == "-":
+                self.START_DATE = start_date
+                repeat = False
+            else:
+                print("Incorrectly formatted start date, please format YYYY-MM-DD")
+        repeat = True
+        while repeat:
+            end_date =  input('What day would you like to end the search? (YYYY-MM-DD)\n')
+            if end_date[4] == "-" and end_date[7] == "-":
+                self.END_DATE = end_date
+                repeat = False
+            else:
+                print("Incorrectly formatted end date, please format YYYY-MM-DD")
+    
     def set_spreadsheet_name(self):
-        #TODO Input validation
-        self.SPREADSHEET_NAME = input("What spreadsheet would you like to use?\nNote: If spreadsheet isn't found this will make a new one in current directory.\n")
+        repeat = True
+        while repeat:
+            spreadsheet_name = input("What spreadsheet would you like to use?\nNote: If spreadsheet isn't found this will make a new one in current directory.\n")
+            if spreadsheet_name != None and spreadsheet_name[len(spreadsheet_name)-5:len(spreadsheet_name)] == ".xlsx":
+                self.SPREADSHEET_NAME = spreadsheet_name
+                repeat = False
+            else:
+                print("Your spreadsheet file must be a .xlsx file, please try again.")
 
     def format_dates(self):
         start_date = self.START_DATE.split('-')
