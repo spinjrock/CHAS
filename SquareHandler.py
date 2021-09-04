@@ -67,7 +67,7 @@ class SquareHandler:
             result_body = ""
             result = self.API.search_orders(self.BODIES[date])
             if result.is_success(): result_body = result.body
-            elif result.is_error(): print("There was a problem getting the order ids\n"+str(result.errors))
+            elif result.is_error(): print("There was a problem getting the order ids\n"+str(result.errors)); input()
             for entry in result_body:
                 for j in result_body[entry]:
                     ids.append(j['order_id'])
