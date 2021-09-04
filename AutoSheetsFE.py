@@ -35,6 +35,7 @@ class AutoSheetFE:
         self.set_dates()
         self.format_dates()
         self.set_spreadsheet_name()
+        print("\n\nWorking...")
         SH = SquareHandler.SquareHandler(self.DATES)
         SH.generate_bodies()
         SPH = SpreadsheetHandler.SpreadsheetHandler(SH.get_range_totals(), self.SPREADSHEET_NAME)
