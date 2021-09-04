@@ -2,6 +2,7 @@
 
 from openpyxl.descriptors.base import DateTime
 from square.client import Client
+import json
 
 class SquareHandler:
 
@@ -78,20 +79,33 @@ class SquareHandler:
             ids = order_ids[date]
             daily_total = 0
             for id in ids:
+                refund = False
                 result = self.API.retrieve_order(id)
                 if result.is_success():
                     result_body = result.body
-                    tenders = result_body['order']['tenders']
+                    try:
+                        tenders = result_body['order']['tenders']
+                    except:
+                        refund = True
                 elif result.is_error(): 
                     print("There was an error in getting the daily totals")
                     print(str(result.errors))
                 tender_total = 0
-                for tender in tenders:
-                    gain = int(tender['amount_money']['amount'])
-                    loss = int(tender['processing_fee_money']['amount'])
-                    net_total = gain - loss
-                    tender_total += net_total
-                daily_total += tender_total
+                if refund != True:
+                    for tender in tenders:
+                        gain = int(tender['amount_money']['amount'])
+                        loss = int(tender['processing_fee_money']['amount'])
+                        net_total = gain - loss
+                        tender_total += net_total
+                    daily_total += tender_total
+                elif refund == True:
+                    refund_total = 0
+                    for refund in result_body['order']['refunds']:
+                        loss = refund['amount_money']['amount'] * -1
+                        gain = refund['processing_fee_money']['amount']
+                        net_total = loss + gain
+                        refund_total += net_total
+                    daily_total += refund_total
             net_amounts[date] = daily_total
         return net_amounts
 
