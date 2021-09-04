@@ -2,3 +2,4 @@ creds*
 __pycache__*
 build/*
 AutoSheetsFE.spec
+*.xlsx
