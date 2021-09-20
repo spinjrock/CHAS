@@ -11,5 +11,4 @@
 <h2>Known Bugs:</h2>
     <ul>
         <li>Can't process refunds : FIXED</li>
-        <li>Can't run on the old laptop, it might be a 32bit system</li>
     </ul>
